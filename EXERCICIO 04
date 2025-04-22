@@ -1,0 +1,64 @@
+public class VagaEstacionamento
+{
+    public int NumeroVaga { get; }
+    private bool ocupada;
+    private string tipoVeiculo;
+
+    public bool Ocupada => ocupada;
+
+    public string TipoVeiculo
+    {
+        get => tipoVeiculo;
+        private set
+        {
+            if (value == "Carro" || value == "Moto" || value == "Caminhão")
+                tipoVeiculo = value;
+            else
+                throw new ArgumentException("Tipo de veículo inválido.");
+        }
+    }
+
+    public VagaEstacionamento(int numero, string tipo)
+    {
+        NumeroVaga = numero;
+        TipoVeiculo = tipo;
+        ocupada = false;
+    }
+
+    public void OcuparVaga() => ocupada = true;
+    public void LiberarVaga() => ocupada = false;
+
+    public void AlterarTipoVeiculo(string novoTipo)
+    {
+        if (!ocupada)
+        {
+            try { TipoVeiculo = novoTipo; }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+        }
+        else
+        {
+            Console.WriteLine("Não é possível alterar o tipo com a vaga ocupada.");
+        }
+    }
+
+    public void ExibirInformacoes()
+    {
+        string status = ocupada ? "Ocupada" : "Livre";
+        Console.WriteLine($"Vaga: {NumeroVaga}, Tipo: {TipoVeiculo}, Status: {status}");
+    }
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+       
+        Produto p = new Produto { Nome = "Caneta", Preco = 2.50 };
+        p.AdicionarEstoque(10);
+        p.RemoverEstoque(3);
+        Console.WriteLine($"Total em estoque: {p.QuantidadeTotal}, Valor total: {p.ValorTotalEmEstoque():C2}");
+
+        
+    }
+}

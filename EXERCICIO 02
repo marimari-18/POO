@@ -1,0 +1,56 @@
+public class Calculo
+{
+    public double ValorA { get; set; }
+    public double ValorB { get; set; }
+    public double Resultado { get; private set; }
+
+    public void CalcularSoma() => Resultado = ValorA + ValorB;
+    public void CalcularSubtracao() => Resultado = ValorA - ValorB;
+    public void CalcularMultiplicacao() => Resultado = ValorA * ValorB;
+    public double RetornarMaior() => (ValorA > ValorB) ? ValorA : ValorB;
+    public double SomarGeral(double valorExtra) => ValorA + ValorB + valorExtra;
+}
+
+public class Calculadora
+{
+    private Calculo calculo = new Calculo();
+
+    public void ExecutarCalculadora()
+    {
+        bool continuar = true;
+        while (continuar)
+        {
+            Console.WriteLine("Escolha uma operação:\n1. Soma\n2. Subtração\n3. Multiplicação\n4. Maior\n5. Somar Geral\n6. Sair");
+            string opcao = Console.ReadLine();
+            if (opcao == "6") break;
+            LerValores();
+
+            switch (opcao)
+            {
+                case "1": calculo.CalcularSoma(); break;
+                case "2": calculo.CalcularSubtracao(); break;
+                case "3": calculo.CalcularMultiplicacao(); break;
+                case "4": Console.WriteLine($"Maior valor: {calculo.RetornarMaior()}"); continue;
+                case "5":
+                    Console.Write("Informe valor extra: ");
+                    double extra = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine($"Resultado: {calculo.SomarGeral(extra)}");
+                    continue;
+            }
+            ImprimirResultado();
+        }
+    }
+
+    public void LerValores()
+    {
+        Console.Write("Valor A: ");
+        calculo.ValorA = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Valor B: ");
+        calculo.ValorB = Convert.ToDouble(Console.ReadLine());
+    }
+
+    public void ImprimirResultado()
+    {
+        Console.WriteLine($"Resultado: {calculo.Resultado}");
+    }
+}
